@@ -215,6 +215,9 @@ Let's explore different visual approaches:
 ```{python}
 #| label: stage-3-mapping-exploration
 #| echo: true
+#| fig-width: 8
+#| fig-height: 9
+#| out-width: "100%"
 
 # Stage 3: Structuring of Visual Mappings
 # Explore different geometries and aesthetics
