@@ -137,6 +137,11 @@ Our purpose is to investigate whether Coors Field in Denver, Colorado is truly t
 
 **Question 1: Hypothesis Formation**
 - Why might high altitude affect baseball performance?  Is Coors Field affected by high altitude?
+
+**Answer:** 
+High altitude affects baseball because the air is thinner at higher elevations. Thinner air creates less resistance, so when a ball is hit, it travels farther. It also reduces how much breaking pitches move, since those pitches rely on air resistance to curve. As a result, games at high altitude often have more scoring and more home runs.
+
+Yes, Coors Field is affected by high altitude because it is located in Denver, which sits about 5,280 feet above sea level. That makes it a strong hitter’s environment with more runs and home runs.
 :::
 
 ## Stage 2: Curation of Content
@@ -181,6 +186,17 @@ print(avgDF_2021.head())
 
 **Question 1: Data Aggregation Strategy**
 - How many games are in the dataset? Why do we aggregate individual games into stadium averages before we start the visualization process?
+
+**Answer:** 
+The dataset has 2,430 games in 2010 and 2,429 games in 2021 (4,859 games in total). 
+
+We aggregate individual games into stadium averages before visualizing for several reasons: 
+1. **Reduce noise**
+A single game can be an outlier and the averaging over all home games at each stadium gives a stable measure of how run-friendly that park is. 
+2. **Match the question**
+We care about “run-friendliness of each ballpark,” which is a stadium-level summary, not a list of every game.
+3. **Make the chart readable**
+Plotting thousands of points would be cluttered and hard to interpret. With one value per stadium (eg: average runs per game) keeps the visualization clear and supports comparison across stadiums.
 :::
 
 ## Stage 3: Structuring of Visual Mappings
@@ -246,10 +262,19 @@ plt.show()
 - Why is a horizontal bar chart better than a scatter plot for this data?
 - When would you choose a vertical bar chart over horizontal?
 
+**Answer:** 
+A horizontal bar chart is better because the data is categories, like stadium names, and it's one number for each. A scatter plot is better for two numeric variables, so it would not fit this situation well. 
+
+With horizontal bars, each stadium gets its own bar, and it is easy to compare which ones have more or fewer runs. A vertical bar chart works better when there are only a few categories and the labels are short, so they fit neatly on the bottom. When there are many stadiums or longer names, horizontal bars are easier to read.
+
 **Question 2: Aesthetic Mappings**
 - What does the color highlighting accomplish in Approach 4?
 - How does position (x/y) compare to color for encoding data?
 
+**Answer:** 
+The color highlighting makes Coors Field stand out from the others, so the viewer quickly notices it. This helps focus attention on the main question about whether it has more runs.
+
+Position on the x-axis or y-axis is the most important way to show the data because the location of the bar and its value represent the average runs. People compare position very accurately. Color is helpful for emphasis or grouping, but it is not as strong as position for showing the actual numeric value.
 :::
 
 ## Stage 4: Formatting for Your Audience
