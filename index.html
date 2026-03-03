@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -204,22 +169,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="data-loading-and-initial-exploration">Data Loading and Initial Exploration</h2>
 <p>Let’s start by loading the baseball data and understanding what we’re working with.</p>
 <div id="load-data" class="cell" data-message="false" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load 2010 baseball season data</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>df2010 <span class="op">=</span> pd.read_csv(<span class="st">"baseball10.csv"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load 2021 baseball season data for comparison</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df2021 <span class="op">=</span> pd.read_csv(<span class="st">"baseball21.csv"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2010 data shape:"</span>, df2010.shape)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2021 data shape:"</span>, df2021.shape)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">2010 data columns:"</span>, df2010.columns.tolist())</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">First few rows of 2010 data:"</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df2010.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2010 data shape: (2430, 7)
 2021 data shape: (2429, 7)
@@ -275,31 +224,6 @@ First few rows of 2010 data:
 <p><strong>Mental Model:</strong> Gather and create all the data you need to support your message.</p>
 <p>Let’s aggregate the data to get average runs per stadium:</p>
 <div id="stage-2-content" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 2: Curation of Content</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate data to get average runs per stadium</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Process 2010 data</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>avgDF_2010 <span class="op">=</span> (df2010</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    .assign(totalRuns <span class="op">=</span> <span class="kw">lambda</span> df: df.homeScore <span class="op">+</span> df.visScore)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    .assign(totalHR <span class="op">=</span> <span class="kw">lambda</span> df: df.homeHR <span class="op">+</span> df.visHR)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    .drop(columns <span class="op">=</span> [<span class="st">'date'</span>, <span class="st">'visiting'</span>])</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">'home'</span>], as_index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Process 2021 data</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>avgDF_2021 <span class="op">=</span> (df2021</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    .assign(totalRuns <span class="op">=</span> <span class="kw">lambda</span> df: df.homeScore <span class="op">+</span> df.visScore)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    .assign(totalHR <span class="op">=</span> <span class="kw">lambda</span> df: df.homeHR <span class="op">+</span> df.visHR)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    .drop(columns <span class="op">=</span> [<span class="st">'date'</span>, <span class="st">'visiting'</span>])</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    .groupby([<span class="st">'home'</span>], as_index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2010 Stadium Averages (Top 5):"</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avgDF_2010.head())</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">2021 Stadium Averages (Top 5):"</span>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(avgDF_2021.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2010 Stadium Averages (Top 5):
   home  visScore  homeScore     visHR    homeHR  totalRuns   totalHR
@@ -339,51 +263,10 @@ First few rows of 2010 data:
 <p><strong>Mental Model:</strong> Choose the right geometry and aesthetics to effectively communicate your message.</p>
 <p>Let’s explore different visual approaches:</p>
 <div id="cell-stage-3-mapping-exploration" class="cell" data-fig-height="9" data-fig-width="8" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 3: Structuring of Visual Mappings</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore different geometries and aesthetics</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort data for better visualization</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>avgDF_2010_sorted <span class="op">=</span> avgDF_2010.sort_values(<span class="st">'totalRuns'</span>, ascending<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure with subplots to compare approaches</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">9</span>))</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 1: Scatter plot (not ideal for categorical data)</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].scatter(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_title(<span class="st">"Approach 1: Scatter Plot"</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].set_ylabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 2: Horizontal bar chart (better for categorical data)</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_title(<span class="st">"Approach 2: Horizontal Bar Chart"</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].set_ylabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>,<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 3: Vertical bar chart</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].bar(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns)</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_title(<span class="st">"Approach 3: Vertical Bar Chart"</span>)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_xlabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].set_ylabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>, labelsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Approach 4: Highlight Colorado</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>colorado_colors <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors)</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_title(<span class="st">"Approach 4: Highlight Colorado"</span>)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_xlabel(<span class="st">"Average Runs"</span>)</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].set_ylabel(<span class="st">"Stadium"</span>)</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>,<span class="dv">1</span>].tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/stage-3-mapping-exploration-output-1.png" id="stage-3-mapping-exploration" width="758" height="854" class="figure-img"></p>
+<p><img src="index_files/figure-html/stage-3-mapping-exploration-output-1.png" id="stage-3-mapping-exploration" width="758" height="855" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -412,59 +295,6 @@ First few rows of 2010 data:
 <p><strong>Mental Model:</strong> Polish your visualization for professional presentation.</p>
 <p>Let’s create a publication-ready visualization:</p>
 <div id="cell-stage-4-formatting" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stage 4: Formatting for Your Audience</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a professional, publication-ready visualization</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set style for professional appearance</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">"seaborn-v0_8-whitegrid"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the main visualization</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create color array for highlighting Colorado</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>colorado_colors <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> stadium <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> </span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> stadium <span class="kw">in</span> avgDF_2010_sorted.home]</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Create horizontal bar chart</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> ax.barh(avgDF_2010_sorted.home, avgDF_2010_sorted.totalRuns, color<span class="op">=</span>colorado_colors)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Add title and labels</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Colorado (COL) is the Most Run-Friendly Ballpark in 2010"</span>, </span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">16</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Average Runs Per Game"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Stadium (Home Team)"</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Add legend</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>colorado_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, label<span class="op">=</span><span class="st">"Colorado Rockies"</span>)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>other_bar <span class="op">=</span> plt.Rectangle((<span class="dv">0</span>,<span class="dv">0</span>),<span class="dv">1</span>,<span class="dv">1</span>, color<span class="op">=</span><span class="st">"lightgrey"</span>, label<span class="op">=</span><span class="st">"Other Stadiums"</span>)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>ax.legend(handles<span class="op">=</span>[colorado_bar, other_bar], loc<span class="op">=</span><span class="st">'lower right'</span>, frameon<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Add annotation for Colorado (use bar y-position, not dataframe index)</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>colorado_runs <span class="op">=</span> avgDF_2010_sorted.loc[avgDF_2010_sorted.home <span class="op">==</span> <span class="st">"COL"</span>, <span class="st">"totalRuns"</span>].iloc[<span class="dv">0</span>]</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>colorado_bar_y <span class="op">=</span> <span class="bu">list</span>(avgDF_2010_sorted.home).index(<span class="st">"COL"</span>)  <span class="co"># position of COL bar on y-axis</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>ax.annotate(<span class="ss">f"COL: </span><span class="sc">{</span>colorado_runs<span class="sc">:.2f}</span><span class="ss"> runs/game"</span>, </span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>            xy<span class="op">=</span>(colorado_runs, colorado_bar_y), </span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>            xytext<span class="op">=</span>(colorado_runs <span class="op">+</span> <span class="fl">0.5</span>, colorado_bar_y),</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>            arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">'-&gt;'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>            fontsize<span class="op">=</span><span class="dv">10</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkorchid'</span>)</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Set x-axis to start from 0 for better comparison</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">0</span>, <span class="bu">max</span>(avgDF_2010_sorted.totalRuns) <span class="op">*</span> <span class="fl">1.1</span>)</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Smaller font for stadium (y-axis) tick labels</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>ax.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Add grid for easier reading</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summary statistics</span></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Summary Statistics for 2010:"</span>)</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado (COL) average runs per game: </span><span class="sc">{</span>colorado_runs<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"League average runs per game: </span><span class="sc">{</span>avgDF_2010_sorted<span class="sc">.</span>totalRuns<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Colorado is </span><span class="sc">{</span>((colorado_runs <span class="op">/</span> avgDF_2010_sorted.totalRuns.mean()) <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">% above league average"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -502,149 +332,6 @@ Colorado is 20.8% above league average</code></pre>
 <p><strong>Mental Model:</strong> Use object-oriented matplotlib to create complex, reusable visualizations.</p>
 <p>Let’s create a comprehensive comparison between 2010 and 2021:</p>
 <div id="cell-advanced-oo-techniques" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Advanced Object-Oriented Techniques</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a comprehensive comparison visualization</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for comparison</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>comparison_data <span class="op">=</span> pd.merge(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    avgDF_2010[[<span class="st">'home'</span>, <span class="st">'totalRuns'</span>]].rename(columns<span class="op">=</span>{<span class="st">'totalRuns'</span>: <span class="st">'runs_2010'</span>}),</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    avgDF_2021[[<span class="st">'home'</span>, <span class="st">'totalRuns'</span>]].rename(columns<span class="op">=</span>{<span class="st">'totalRuns'</span>: <span class="st">'runs_2021'</span>}),</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">'home'</span>, how<span class="op">=</span><span class="st">'inner'</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort each year independently (highest -&gt; lowest)</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>comparison_sorted_2010 <span class="op">=</span> comparison_data.sort_values(<span class="st">'runs_2010'</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>comparison_sorted_2021 <span class="op">=</span> comparison_data.sort_values(<span class="st">'runs_2021'</span>, ascending<span class="op">=</span><span class="va">False</span>).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a shared x-axis limit across both facets</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>x_max <span class="op">=</span> comparison_data[[<span class="st">"runs_2010"</span>, <span class="st">"runs_2021"</span>]].<span class="bu">max</span>().<span class="bu">max</span>() <span class="op">*</span> <span class="fl">1.1</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Object-oriented figure: two facets (2010 and 2021)</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">8</span>))</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Colors: highlight Colorado (COL), neutral for others</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>colors_2010 <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> s <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> <span class="cf">for</span> s <span class="kw">in</span> comparison_sorted_2010.home]</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>colors_2021 <span class="op">=</span> [<span class="st">"darkorchid"</span> <span class="cf">if</span> s <span class="op">==</span> <span class="st">"COL"</span> <span class="cf">else</span> <span class="st">"lightgrey"</span> <span class="cf">for</span> s <span class="kw">in</span> comparison_sorted_2021.home]</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Left facet: 2010</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>ax0 <span class="op">=</span> axes[<span class="dv">0</span>]</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>bars0 <span class="op">=</span> ax0.barh(comparison_sorted_2010.home, comparison_sorted_2010.runs_2010, color<span class="op">=</span>colors_2010)</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>ax0.set_title(<span class="st">"2010: Average Runs per Game by Stadium"</span>)</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>ax0.set_xlabel(<span class="st">"Average runs per game"</span>)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>ax0.set_xlim(<span class="dv">0</span>, x_max)</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>ax0.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>ax0.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>ax0.invert_yaxis()</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Annotate Colorado (COL) with value</span></span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"COL"</span> <span class="kw">in</span> <span class="bu">set</span>(comparison_sorted_2010.home):</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    idx0 <span class="op">=</span> <span class="bu">list</span>(comparison_sorted_2010.home).index(<span class="st">"COL"</span>)</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    bar0 <span class="op">=</span> <span class="bu">list</span>(bars0)[idx0]</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    x0 <span class="op">=</span> bar0.get_width()</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    y0 <span class="op">=</span> bar0.get_y() <span class="op">+</span> bar0.get_height() <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    ax0.annotate(</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"COL: </span><span class="sc">{</span>x0<span class="sc">:.2f}</span><span class="ss">"</span>,</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>        xy<span class="op">=</span>(x0, y0),</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>        xytext<span class="op">=</span>(x0 <span class="op">+</span> x_max <span class="op">*</span> <span class="fl">0.03</span>, y0),</span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>        va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"darkorchid"</span>,</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Color-block annotation (used in both facets)</span></span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.offsetbox <span class="im">import</span> AnchoredOffsetbox, TextArea, VPacker, HPacker</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>col_line <span class="op">=</span> HPacker(</span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    children<span class="op">=</span>[</span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">"</span><span class="ch">\u25A0</span><span class="st">"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"darkorchid"</span>, size<span class="op">=</span><span class="dv">11</span>)),</span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">" Colorado (COL)"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="dv">9</span>)),</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    align<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>    pad<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>    sep<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>other_line <span class="op">=</span> HPacker(</span>
-<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>    children<span class="op">=</span>[</span>
-<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">"</span><span class="ch">\u25A0</span><span class="st">"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"lightgrey"</span>, size<span class="op">=</span><span class="dv">11</span>)),</span>
-<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">" Other stadiums"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="dv">9</span>)),</span>
-<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>    align<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>    pad<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>    sep<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>note_box <span class="op">=</span> VPacker(children<span class="op">=</span>[col_line, other_line], align<span class="op">=</span><span class="st">"left"</span>, pad<span class="op">=</span><span class="dv">0</span>, sep<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>note0 <span class="op">=</span> AnchoredOffsetbox(</span>
-<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>    loc<span class="op">=</span><span class="st">"lower right"</span>,</span>
-<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>    child<span class="op">=</span>note_box,</span>
-<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>    pad<span class="op">=</span><span class="fl">0.25</span>,</span>
-<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>    frameon<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a>    bbox_to_anchor<span class="op">=</span>(<span class="fl">0.98</span>, <span class="fl">0.02</span>),</span>
-<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>    bbox_transform<span class="op">=</span>ax0.transAxes,</span>
-<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>    borderpad<span class="op">=</span><span class="fl">0.35</span>,</span>
-<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>note0.patch.<span class="bu">set</span>(facecolor<span class="op">=</span><span class="st">"white"</span>, alpha<span class="op">=</span><span class="fl">0.85</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a>ax0.add_artist(note0)</span>
-<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Right facet: 2021</span></span>
-<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> axes[<span class="dv">1</span>]</span>
-<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>bars1 <span class="op">=</span> ax1.barh(comparison_sorted_2021.home, comparison_sorted_2021.runs_2021, color<span class="op">=</span>colors_2021)</span>
-<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">"2021: Average Runs per Game by Stadium"</span>)</span>
-<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">"Average runs per game"</span>)</span>
-<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(<span class="dv">0</span>, x_max)</span>
-<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>ax1.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelsize<span class="op">=</span><span class="dv">9</span>)</span>
-<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>ax1.invert_yaxis()</span>
-<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Annotate Colorado (COL) with value</span></span>
-<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"COL"</span> <span class="kw">in</span> <span class="bu">set</span>(comparison_sorted_2021.home):</span>
-<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>    idx1 <span class="op">=</span> <span class="bu">list</span>(comparison_sorted_2021.home).index(<span class="st">"COL"</span>)</span>
-<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>    bar1 <span class="op">=</span> <span class="bu">list</span>(bars1)[idx1]</span>
-<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>    x1 <span class="op">=</span> bar1.get_width()</span>
-<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>    y1 <span class="op">=</span> bar1.get_y() <span class="op">+</span> bar1.get_height() <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>    ax1.annotate(</span>
-<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"COL: </span><span class="sc">{</span>x1<span class="sc">:.2f}</span><span class="ss">"</span>,</span>
-<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>        xy<span class="op">=</span>(x1, y1),</span>
-<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>        xytext<span class="op">=</span>(x1 <span class="op">+</span> x_max <span class="op">*</span> <span class="fl">0.03</span>, y1),</span>
-<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>        va<span class="op">=</span><span class="st">"center"</span>,</span>
-<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>        arrowprops<span class="op">=</span><span class="bu">dict</span>(arrowstyle<span class="op">=</span><span class="st">"-&gt;"</span>, color<span class="op">=</span><span class="st">"darkorchid"</span>, lw<span class="op">=</span><span class="dv">2</span>),</span>
-<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>        fontsize<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>        fontweight<span class="op">=</span><span class="st">"bold"</span>,</span>
-<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span><span class="st">"darkorchid"</span>,</span>
-<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a><span class="co"># Same color-block annotation on 2021 facet (duplicate so each facet has its own)</span></span>
-<span id="cb8-115"><a href="#cb8-115" aria-hidden="true" tabindex="-1"></a>col_line_1 <span class="op">=</span> HPacker(</span>
-<span id="cb8-116"><a href="#cb8-116" aria-hidden="true" tabindex="-1"></a>    children<span class="op">=</span>[</span>
-<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">"</span><span class="ch">\u25A0</span><span class="st">"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"darkorchid"</span>, size<span class="op">=</span><span class="dv">11</span>)),</span>
-<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">" Colorado (COL)"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="dv">9</span>)),</span>
-<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>    align<span class="op">=</span><span class="st">"center"</span>, pad<span class="op">=</span><span class="dv">0</span>, sep<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a>other_line_1 <span class="op">=</span> HPacker(</span>
-<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a>    children<span class="op">=</span>[</span>
-<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">"</span><span class="ch">\u25A0</span><span class="st">"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"lightgrey"</span>, size<span class="op">=</span><span class="dv">11</span>)),</span>
-<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a>        TextArea(<span class="st">" Other stadiums"</span>, textprops<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"black"</span>, size<span class="op">=</span><span class="dv">9</span>)),</span>
-<span id="cb8-126"><a href="#cb8-126" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb8-127"><a href="#cb8-127" aria-hidden="true" tabindex="-1"></a>    align<span class="op">=</span><span class="st">"center"</span>, pad<span class="op">=</span><span class="dv">0</span>, sep<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>note_box_1 <span class="op">=</span> VPacker(children<span class="op">=</span>[col_line_1, other_line_1], align<span class="op">=</span><span class="st">"left"</span>, pad<span class="op">=</span><span class="dv">0</span>, sep<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>note1 <span class="op">=</span> AnchoredOffsetbox(</span>
-<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>    loc<span class="op">=</span><span class="st">"lower right"</span>,</span>
-<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>    child<span class="op">=</span>note_box_1,</span>
-<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a>    pad<span class="op">=</span><span class="fl">0.25</span>,</span>
-<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a>    frameon<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a>    bbox_to_anchor<span class="op">=</span>(<span class="fl">0.98</span>, <span class="fl">0.02</span>),</span>
-<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a>    bbox_transform<span class="op">=</span>ax1.transAxes,</span>
-<span id="cb8-137"><a href="#cb8-137" aria-hidden="true" tabindex="-1"></a>    borderpad<span class="op">=</span><span class="fl">0.35</span>,</span>
-<span id="cb8-138"><a href="#cb8-138" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a>note1.patch.<span class="bu">set</span>(facecolor<span class="op">=</span><span class="st">"white"</span>, alpha<span class="op">=</span><span class="fl">0.85</span>, edgecolor<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>ax1.add_artist(note1)</span>
-<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -670,20 +357,6 @@ Colorado is 20.8% above league average</code></pre>
 <p>Yes, the AI came to the right conclusion. It correctly identified that Colorado (Coors Field) ranks among the highest-scoring parks in both seasons, reflecting its well-known run-friendly environment due to altitude.</p>
 </div>
 </div>
-</section>
-<section id="student-analysis-section" class="level2">
-<h2 class="anchored" data-anchor-id="student-analysis-section">Student Analysis Section: Mastering Object-Oriented Matplotlib</h2>
-<p><strong>Your Task:</strong> Demonstrate your mastery of object-oriented matplotlib and the four stages of visualization through comprehensive analysis and creation of professional visualizations.</p>
-<section id="core-challenge-four-stages-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="core-challenge-four-stages-analysis">Core Challenge: Four Stages Analysis</h3>
-<p><strong>For each stage, provide:</strong> - Clear, concise answers to all discussion questions - Code examples when asked to do so - Demonstration of object-oriented matplotlib techniques</p>
-</section>
-<section id="professional-visualizations-for-100-grade" class="level3">
-<h3 class="anchored" data-anchor-id="professional-visualizations-for-100-grade">Professional Visualizations (For 100% Grade)</h3>
-<p><strong>Your Task:</strong> Create a professional visualization and narrative that builds towards and demonstrates mastery of object-oriented matplotlib and the four stages framework.</p>
-<p><strong>Create visualizations showing:</strong> - Stadium run-friendliness comparison between 2010 and 2021 - Focus on Colorado’s performance relative to other stadiums - Use object-oriented matplotlib techniques throughout</p>
-<p><strong>Your visualizations should:</strong> - Use clear labels and professional formatting - Demonstrate all four stages of visualization - Be appropriate for a business audience - Show mastery of object-oriented matplotlib - Do not <code>echo</code> the code that creates the visualizations</p>
-</section>
 </section>
 
 </main>
