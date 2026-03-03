@@ -314,12 +314,12 @@ colorado_bar = plt.Rectangle((0,0),1,1, color="darkorchid", label="Colorado Rock
 other_bar = plt.Rectangle((0,0),1,1, color="lightgrey", label="Other Stadiums")
 ax.legend(handles=[colorado_bar, other_bar], loc='lower right', frameon=True)
 
-# Add annotation for Colorado
-colorado_index = avgDF_2010_sorted[avgDF_2010_sorted.home == "COL"].index[0]
-colorado_runs = avgDF_2010_sorted[avgDF_2010_sorted.home == "COL"]["totalRuns"].iloc[0]
+# Add annotation for Colorado (use bar y-position, not dataframe index)
+colorado_runs = avgDF_2010_sorted.loc[avgDF_2010_sorted.home == "COL", "totalRuns"].iloc[0]
+colorado_bar_y = list(avgDF_2010_sorted.home).index("COL")  # position of COL bar on y-axis
 ax.annotate(f"COL: {colorado_runs:.2f} runs/game", 
-            xy=(colorado_runs, colorado_index), 
-            xytext=(colorado_runs + 0.5, colorado_index),
+            xy=(colorado_runs, colorado_bar_y), 
+            xytext=(colorado_runs + 0.5, colorado_bar_y),
             arrowprops=dict(arrowstyle='->', color='darkorchid', lw=2),
             fontsize=10, fontweight='bold', color='darkorchid')
 
@@ -349,6 +349,12 @@ print(f"Colorado is {((colorado_runs / avgDF_2010_sorted.totalRuns.mean()) - 1) 
 - What elements make this visualization suitable for a business presentation?
 - Is the annotation on the visualization helpful?  Can you fix its placement?
 
+**Answer:** 
+This chart works well for a business presentation because it is clear and easy to read. The title clearly states the main message, and the axis labels explain that the metric is average runs per game. The colors are simple, with one color highlighting Colorado and the rest in neutral tones, so the focus stays on the key comparison. The grid lines are light but help make the values easier to compare. The horizontal layout makes the stadium names readable, especially since there are many of them. The x-axis starts at zero, which makes the comparison fair and not misleading. Overall, the chart looks clean and professional.
+
+The annotation is helpful because it directly points to Colorado’s value, so the audience can quickly see the key number.
+
+Its placement was wrong because it used the dataframe’s row index for the y-coordinate instead of the bar’s position on the plot. The code was updated to use the bar’s y-position, so the label and arrow aligns with the COL bar.
 :::
 
 
