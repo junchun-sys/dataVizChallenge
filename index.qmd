@@ -352,7 +352,7 @@ print(f"Colorado is {((colorado_runs / avgDF_2010_sorted.totalRuns.mean()) - 1) 
 **Answer:** 
 This chart works well for a business presentation because it is clear and easy to read. The title clearly states the main message, and the axis labels explain that the metric is average runs per game. The colors are simple, with one color highlighting Colorado and the rest in neutral tones, so the focus stays on the key comparison. The grid lines are light but help make the values easier to compare. The horizontal layout makes the stadium names readable, especially since there are many of them. The x-axis starts at zero, which makes the comparison fair and not misleading. Overall, the chart looks clean and professional.
 
-The annotation is helpful because it directly points to Colorado’s value, so the audience can quickly see the key number.
+The annotation is helpful because it directly highlights Colorado’s value, so the audience can quickly see the key number.
 
 Its placement was wrong because it used the dataframe’s row index for the y-coordinate instead of the bar’s position on the plot. The code was updated to use the bar’s y-position, so the label and arrow aligns with the COL bar.
 :::
@@ -378,7 +378,139 @@ comparison_data = pd.merge(
     on='home', how='inner'
 )
 
-## TODO: Create the visualization
+# Sort each year independently (highest -> lowest)
+comparison_sorted_2010 = comparison_data.sort_values('runs_2010', ascending=False).reset_index(drop=True)
+comparison_sorted_2021 = comparison_data.sort_values('runs_2021', ascending=False).reset_index(drop=True)
+
+# Use a shared x-axis limit across both facets
+x_max = comparison_data[["runs_2010", "runs_2021"]].max().max() * 1.1
+
+# Object-oriented figure: two facets (2010 and 2021)
+fig, axes = plt.subplots(1, 2, figsize=(14, 8))
+
+# Colors: highlight Colorado (COL), neutral for others
+colors_2010 = ["darkorchid" if s == "COL" else "lightgrey" for s in comparison_sorted_2010.home]
+colors_2021 = ["darkorchid" if s == "COL" else "lightgrey" for s in comparison_sorted_2021.home]
+
+# Left facet: 2010
+ax0 = axes[0]
+bars0 = ax0.barh(comparison_sorted_2010.home, comparison_sorted_2010.runs_2010, color=colors_2010)
+ax0.set_title("2010: Average Runs per Game by Stadium")
+ax0.set_xlabel("Average runs per game")
+ax0.set_xlim(0, x_max)
+ax0.grid(True, alpha=0.3)
+ax0.tick_params(axis='y', labelsize=9)
+ax0.invert_yaxis()
+
+# Annotate Colorado (COL) with value
+if "COL" in set(comparison_sorted_2010.home):
+    idx0 = list(comparison_sorted_2010.home).index("COL")
+    bar0 = list(bars0)[idx0]
+    x0 = bar0.get_width()
+    y0 = bar0.get_y() + bar0.get_height() / 2
+    ax0.annotate(
+        f"COL: {x0:.2f}",
+        xy=(x0, y0),
+        xytext=(x0 + x_max * 0.03, y0),
+        va="center",
+        arrowprops=dict(arrowstyle="->", color="darkorchid", lw=2),
+        fontsize=10,
+        fontweight="bold",
+        color="darkorchid",
+    )
+
+# Color-block annotation (used in both facets)
+from matplotlib.offsetbox import AnchoredOffsetbox, TextArea, VPacker, HPacker
+
+col_line = HPacker(
+    children=[
+        TextArea("\u25A0", textprops=dict(color="darkorchid", size=11)),
+        TextArea(" Colorado (COL)", textprops=dict(color="black", size=9)),
+    ],
+    align="center",
+    pad=0,
+    sep=2,
+)
+other_line = HPacker(
+    children=[
+        TextArea("\u25A0", textprops=dict(color="lightgrey", size=11)),
+        TextArea(" Other stadiums", textprops=dict(color="black", size=9)),
+    ],
+    align="center",
+    pad=0,
+    sep=2,
+)
+note_box = VPacker(children=[col_line, other_line], align="left", pad=0, sep=2)
+
+note0 = AnchoredOffsetbox(
+    loc="lower right",
+    child=note_box,
+    pad=0.25,
+    frameon=True,
+    bbox_to_anchor=(0.98, 0.02),
+    bbox_transform=ax0.transAxes,
+    borderpad=0.35,
+)
+note0.patch.set(facecolor="white", alpha=0.85, edgecolor="none")
+ax0.add_artist(note0)
+
+# Right facet: 2021
+ax1 = axes[1]
+bars1 = ax1.barh(comparison_sorted_2021.home, comparison_sorted_2021.runs_2021, color=colors_2021)
+ax1.set_title("2021: Average Runs per Game by Stadium")
+ax1.set_xlabel("Average runs per game")
+ax1.set_xlim(0, x_max)
+ax1.grid(True, alpha=0.3)
+ax1.tick_params(axis='y', labelsize=9)
+ax1.invert_yaxis()
+
+# Annotate Colorado (COL) with value
+if "COL" in set(comparison_sorted_2021.home):
+    idx1 = list(comparison_sorted_2021.home).index("COL")
+    bar1 = list(bars1)[idx1]
+    x1 = bar1.get_width()
+    y1 = bar1.get_y() + bar1.get_height() / 2
+    ax1.annotate(
+        f"COL: {x1:.2f}",
+        xy=(x1, y1),
+        xytext=(x1 + x_max * 0.03, y1),
+        va="center",
+        arrowprops=dict(arrowstyle="->", color="darkorchid", lw=2),
+        fontsize=10,
+        fontweight="bold",
+        color="darkorchid",
+    )
+
+# Same color-block annotation on 2021 facet (duplicate so each facet has its own)
+col_line_1 = HPacker(
+    children=[
+        TextArea("\u25A0", textprops=dict(color="darkorchid", size=11)),
+        TextArea(" Colorado (COL)", textprops=dict(color="black", size=9)),
+    ],
+    align="center", pad=0, sep=2,
+)
+other_line_1 = HPacker(
+    children=[
+        TextArea("\u25A0", textprops=dict(color="lightgrey", size=11)),
+        TextArea(" Other stadiums", textprops=dict(color="black", size=9)),
+    ],
+    align="center", pad=0, sep=2,
+)
+note_box_1 = VPacker(children=[col_line_1, other_line_1], align="left", pad=0, sep=2)
+note1 = AnchoredOffsetbox(
+    loc="lower right",
+    child=note_box_1,
+    pad=0.25,
+    frameon=True,
+    bbox_to_anchor=(0.98, 0.02),
+    bbox_transform=ax1.transAxes,
+    borderpad=0.35,
+)
+note1.patch.set(facecolor="white", alpha=0.85, edgecolor="none")
+ax1.add_artist(note1)
+
+plt.tight_layout()
+plt.show()
 
 ```
 
@@ -388,9 +520,17 @@ comparison_data = pd.merge(
 **Question 1: Using Subplot Layout**
 - Create a two-facet visualization that shows the total runs for 2010 and 2021 for each stadium in a single figure.  Highlight Colorado in the visualization.
 
+**Answer:**
+The visualization uses a subplot layout with one row and two columns. The left facet shows average total runs per game by stadium for 2010, and the right facet shows the same for 2021. Colorado (COL) is highlighted in darkorchid in both panels so it is easy to compare Coors Field across years, while all other stadiums are in lightgrey. In each facet, the stadiums are ordered from highest to lowest for that year. The COL bar is annotated with an arrow and its numeric value to make Colorado’s placement and performance easy to spot.
+
 **Question 2: Explanation of the Visualization**
 - Ask AI To Add A Paragraph Here To Explain The Visualization
 - Does AI come to the right conclusion?  If not, why not?
+
+**Answer:**
+The figure is a two-panel comparison of average runs per game by stadium for 2010 (left) and 2021 (right). In each panel, horizontal bars show every stadium, sorted from highest to lowest runs for that year. Colorado (COL) is highlighted in darkorchid and annotated with its value so it can be compared across years, while the other stadiums are in light grey. A shared x-axis scale across both panels makes year-to-year comparison fair. The takeaway is that Colorado (Coors Field) ranks among the highest-scoring parks in both seasons, reflecting its well-known run-friendly environment due to altitude. The visualization supports the conclusion.
+
+Yes, the AI came to the right conclusion. It correctly identified that Colorado (Coors Field) ranks among the highest-scoring parks in both seasons, reflecting its well-known run-friendly environment due to altitude.
 :::
 
 ## Student Analysis Section: Mastering Object-Oriented Matplotlib {#student-analysis-section}
